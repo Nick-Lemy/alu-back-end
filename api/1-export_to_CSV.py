@@ -1,25 +1,29 @@
 #!/usr/bin/python3
-"""export data in the CSV format"""
-import sys
+"""Module"""
+
 import requests
-import csv
+import sys
 
 if __name__ == '__main__':
-    """gather data from an api"""
-    response_todos = requests.get(
-        "https://jsonplaceholder.typicode.com/user/" + sys.argv[1] + "/todos"
-    )
-    data = response_todos.json()
-    completed_tasks = []
-    for i in data:
-        if i['completed']:
-            completed_tasks.append(i['title'])
-    r = 'completed'
+    employee_id = sys.argv[1]
+    user_url = "https://jsonplaceholder.typicode.com/users/{}" \
+        .format(employee_id)
+    todos_url = "https://jsonplaceholder.typicode.com/users/{}/todos/" \
+        .format(employee_id)
 
-    user = requests.get(
-        "https://jsonplaceholder.typicode.com/users/" + sys.argv[1]
-    ).json()
-    with open(f'USER_ID.csv', 'w', newline="") as file:
-        csvwriter = csv.writer(file, quotechar='"', quoting=csv.QUOTE_ALL)  # create a csvwriter object
-        for i in data:
-            csvwriter.writerow([sys.argv[1], user["username"], i["completed"], i["title"]])
+    user_info = requests.request('GET', user_url).json()
+    todos_info = requests.request('GET', todos_url).json()
+
+    employee_name = user_info["name"]
+    employee_username = user_info["username"]
+    task_completed = list(filter(lambda obj:
+                                 (obj["completed"] is True), todos_info))
+    number_of_done_tasks = len(task_completed)
+    total_number_of_tasks = len(todos_info)
+
+    with open(str(employee_id) + '.csv', "w") as file:
+        [file.write('"' + str(employee_id) + '",' +
+                    '"' + employee_username + '",' +
+                    '"' + str(task["completed"]) + '",' +
+                    '"' + task["title"] + '",' + "\n")
+         for task in todos_info]
