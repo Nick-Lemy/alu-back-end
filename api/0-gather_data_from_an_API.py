@@ -2,6 +2,10 @@
 import sys
 import requests
 
+"""
+    gather data from an api
+"""
+
 response_todos = requests.get("https://jsonplaceholder.typicode.com/user/"+sys.argv[1]+"/todos")
 data = response_todos.json()
 completed_tasks = []
