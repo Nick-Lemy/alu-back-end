@@ -1,8 +1,8 @@
 #!/usr/bin/python3
 
 """gather data from an api"""
-import sys
 import requests
+import sys
 
 if __name__ == '__main__':
     """gather data from an api"""
@@ -20,11 +20,7 @@ if __name__ == '__main__':
     ).json()
     tasks = ""
     for i in range(0, len(completed_tasks)):
-        if i == len(completed_tasks) - 1:
-            tasks += "\t" + completed_tasks[i]
-        else:
-            tasks += "\t" + completed_tasks[i] + "\n"
+        tasks += "\n\t" + completed_tasks[i]
     print(
-        f"Employee {user['name']} is done with tasks({len(completed_tasks)}/{len(data)}):"
+        f"Employee {user['name']} is done with tasks({len(completed_tasks)}/{len(data)}):{tasks}"
     )
-    print(tasks)
