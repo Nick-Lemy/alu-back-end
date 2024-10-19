@@ -21,6 +21,5 @@ if __name__ == '__main__':
     tasks = ""
     for i in range(0, len(completed_tasks)):
         tasks += "\n\t" + completed_tasks[i]
-    print(
-        f"Employee {user['name']} is done with tasks({len(completed_tasks)}/{len(data)}):{tasks}"
-    )
+    print("Employee {} is done with tasks({}/{}):{}".
+          format(user["name"], len(completed_tasks), len(data), tasks))
