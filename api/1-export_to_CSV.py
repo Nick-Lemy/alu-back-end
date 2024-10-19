@@ -21,10 +21,9 @@ if __name__ == '__main__':
     ).json()
     # data format => "USER_ID","USERNAME","TASK_COMPLETED_STATUS","TASK_TITLE" => sys.argv[1], user["name"], i["complated"], i["title"]
     result = []
-    for i in data:
-        result.append([sys.argv[1], user["name"], i["completed"], i["title"]])
 
     with open('USER_ID.csv', 'w', newline="") as file:
         csvwriter = csv.writer(file) # 2. create a csvwriter object
-        csvwriter.writerows(result) # 5. write the rest of the data
-    
+
+        for i in data:
+            csvwriter.writerow([sys.argv[1], user["name"], i["completed"], i["title"]])
