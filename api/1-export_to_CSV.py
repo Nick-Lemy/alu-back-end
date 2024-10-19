@@ -19,11 +19,7 @@ if __name__ == '__main__':
     user = requests.get(
         "https://jsonplaceholder.typicode.com/users/" + sys.argv[1]
     ).json()
-    # data format => "USER_ID","USERNAME","TASK_COMPLETED_STATUS","TASK_TITLE" => sys.argv[1], user["name"], i["complated"], i["title"]
-    result = []
-
-    with open('USER_ID.csv', 'w', newline="") as file:
-        csvwriter = csv.writer(file) # 2. create a csvwriter object
-
+    with open(f'USER_ID.csv', 'w', newline="") as file:
+        csvwriter = csv.writer(file, quotechar='"', quoting=csv.QUOTE_ALL)  # create a csvwriter object
         for i in data:
-            csvwriter.writerow([sys.argv[1], user["name"], i["completed"], i["title"]])
+            csvwriter.writerow([sys.argv[1], user["username"], i["completed"], i["title"]])
